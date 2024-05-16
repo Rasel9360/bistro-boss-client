@@ -1,0 +1,8 @@
+.featured-items {
+    background-image: linear-gradient(0deg, rgba(21, 21, 21, 0.70) 0%, rgba(21, 21, 21, 0.70) 100%), url('../../../assets/home/featured.jpg');
+    background-position: center;
+    object-fit: contain;
+    object-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
