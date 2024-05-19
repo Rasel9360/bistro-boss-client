@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import img from "../../assets/authentication2 1.png";
 import './login.css';
 import { loadCaptchaEnginge, LoadCanvasTemplate, LoadCanvasTemplateNoReload, validateCaptcha } from 'react-simple-captcha';
@@ -9,7 +9,11 @@ import { AuthContext } from "../../AuthProvider/AuthProvider";
 const Login = () => {
     const [disabled, setDisabled] = useState(true);
     const { signInUser } = useContext(AuthContext);
-    const captchaCode = useRef(null);
+
+    const location = useLocation();
+    const navigate = useNavigate();
+
+    const from = location.state?.from?.pathname || "/"
 
 
     useEffect(() => {
@@ -27,16 +31,18 @@ const Login = () => {
                 const user = result.user;
                 console.log(user);
                 toast.success('Login Successfully')
+                navigate(from, {replace: true});
             })
             .catch(error => {
                 console.error(error);
                 toast.error(error.message)
             })
+        form.reset();
 
     }
 
-    const handleCaptcha = () => {
-        const user_captcha_value = captchaCode.current.value;
+    const handleCaptcha = (e) => {
+        const user_captcha_value = e.target.value;
         if (validateCaptcha(user_captcha_value)) {
             setDisabled(false);
         }
@@ -75,8 +81,7 @@ const Login = () => {
                                 <label className="label">
                                     <LoadCanvasTemplate />
                                 </label>
-                                <input ref={captchaCode} type="text" name="captcha" placeholder="Type the captcha above" className="input input-bordered" required />
-                                <button onClick={handleCaptcha} className="btn btn-outline btn-sm mt-2 w-1/3">Valid Captcha</button>
+                                <input onBlur={handleCaptcha} type="text" name="captcha" placeholder="Type the captcha above" className="input input-bordered" required />
                             </div>
                             <div className="form-control mt-6">
                                 <button disabled={disabled} className="btn bg-[#DAB883] text-white text-lg">Login</button>

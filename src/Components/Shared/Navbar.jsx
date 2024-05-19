@@ -1,13 +1,32 @@
+import { useContext } from "react";
 import { NavLink } from "react-router-dom";
+import { AuthContext } from "../../AuthProvider/AuthProvider";
+import { toast } from "react-toastify";
 
 
 const Navbar = () => {
+    const { user, logOutUser } = useContext(AuthContext);
+
+    const handleLogOur = () => {
+        logOutUser()
+            .then(() => {
+                toast.success('Log out successfully')
+            })
+            .catch(err => {
+                toast.error(err.message)
+            })
+
+    }
 
     const navLinks = <>
-       <li><NavLink to='/'>HOME</NavLink></li>
-       <li><NavLink to='/menu'>OUR MENU</NavLink></li>
-       <li><NavLink to='/order/salad'>OUR SHOP</NavLink></li>
-       <li><NavLink to='/login'>LOGIN</NavLink></li>
+        <li><NavLink to='/'>HOME</NavLink></li>
+        <li><NavLink to='/menu'>OUR MENU</NavLink></li>
+        <li><NavLink to='/order/salad'>OUR SHOP</NavLink></li>
+
+        {
+            user ? <><button onClick={handleLogOur}>LOGOUT</button></> :
+                <li><NavLink to='/login'>LOGIN</NavLink></li>
+        }
     </>
 
     return (
