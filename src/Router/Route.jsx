@@ -40,15 +40,15 @@ const Route = createBrowserRouter([
     ]
   },
   {
-    path: "/dashboard",
+    path: "dashboard",
     element: <PrivateRoute><Dashboard></Dashboard></PrivateRoute>,
     children: [
       {
-        path: '/dashboard/cart',
+        path: 'cart',
         element: <Cart></Cart>
       },
       {
-        path: '/dashboard/allUsers',
+        path: 'allUsers',
         element: <AllUsers></AllUsers>
       }
     ]
