@@ -115,7 +115,7 @@ const UpdateItem = () => {
                     <div>
                         <input
                             type="file"
-                            {...register("image", { required: true })}
+                            // {...register("image", { required: true })}
                             className="file-input  w-full max-w-xs" />
                     </div>
                     <div className="flex justify-center">
