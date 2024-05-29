@@ -34,10 +34,10 @@ const Navbar = () => {
             </div>
         </NavLink></li>
 
-        {
+        {/* {
             user ? <><button onClick={handleLogOur}>LOGOUT</button></> :
                 <li><NavLink to='/login'>LOGIN</NavLink></li>
-        }
+        } */}
 
     </>
 
@@ -60,21 +60,26 @@ const Navbar = () => {
                 </ul>
             </div>
             <div className="navbar-end">
-                <div title={user?.displayName} className="dropdown dropdown-end text-black">
-                    <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
-                        <div className="w-10 rounded-full">
-                            <img alt="Tailwind CSS Navbar component" src={user?.photoURL} />
+                {
+                    user ? <>
+                        <div title={user?.displayName} className="dropdown dropdown-end text-black">
+                            <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
+                                <div className="w-10 rounded-full">
+                                    <img alt="Tailwind CSS Navbar component" src={user?.photoURL} />
+                                </div>
+                            </div>
+                            <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
+                                {
+                                    user && isAdmin ?
+                                        <li><NavLink to='/dashboard/adminHome'>Dashboard</NavLink></li> :
+                                        <li><NavLink to='/dashboard/userHome'>Dashboard</NavLink></li>
+                                }
+                                <li><button onClick={handleLogOur}>LOGOUT</button></li>
+                            </ul>
                         </div>
-                    </div>
-                    <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
-                        {
-                            user && isAdmin ?
-                                <li><NavLink to='/dashboard/adminHome'>Dashboard</NavLink></li> :
-                                <li><NavLink to='/dashboard/userHome'>Dashboard</NavLink></li>
-                        }
-                        <li><a>Logout</a></li>
-                    </ul>
-                </div>
+                    </> :
+                        <ul><li><NavLink to='/login'>LOGIN</NavLink></li></ul>
+                }
             </div>
         </div>
     );
