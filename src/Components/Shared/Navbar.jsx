@@ -4,11 +4,13 @@ import { AuthContext } from "../../AuthProvider/AuthProvider";
 import { toast } from "react-toastify";
 import { FaCartPlus } from "react-icons/fa";
 import useCart from "../../Hooks/useCart";
+import useAdmin from "../../Hooks/useAdmin";
 
 
 const Navbar = () => {
     const { user, logOutUser } = useContext(AuthContext);
     const [cart] = useCart();
+    const [isAdmin] = useAdmin();
 
     const handleLogOur = () => {
         logOutUser()
@@ -36,6 +38,7 @@ const Navbar = () => {
             user ? <><button onClick={handleLogOur}>LOGOUT</button></> :
                 <li><NavLink to='/login'>LOGIN</NavLink></li>
         }
+
     </>
 
     return (
@@ -60,13 +63,15 @@ const Navbar = () => {
                 <div title={user?.displayName} className="dropdown dropdown-end text-black">
                     <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
                         <div className="w-10 rounded-full">
-                            <img alt="Tailwind CSS Navbar component" src={user?.photoURL}/>
+                            <img alt="Tailwind CSS Navbar component" src={user?.photoURL} />
                         </div>
                     </div>
                     <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
-                        <li>
-                        <Link to='/dashboard/adminHome' className="">Dashboard</Link>
-                        </li>
+                        {
+                            user && isAdmin ?
+                                <li><NavLink to='/dashboard/adminHome'>Dashboard</NavLink></li> :
+                                <li><NavLink to='/dashboard/userHome'>Dashboard</NavLink></li>
+                        }
                         <li><a>Logout</a></li>
                     </ul>
                 </div>

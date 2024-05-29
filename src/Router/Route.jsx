@@ -17,6 +17,7 @@ import UpdateItem from '../Pages/Dashboard/UpdateItem/UpdateItem';
 import AdminHome from '../Pages/Dashboard/AdminHome/AdminHome';
 import Payment from '../Pages/Dashboard/Payment/Payment';
 import PaymentHistory from '../Pages/Dashboard/PaymentHistory/PaymentHistory';
+import UserHome from '../Pages/Dashboard/UserHome/UserHome';
 
 const Route = createBrowserRouter([
   {
@@ -30,7 +31,7 @@ const Route = createBrowserRouter([
       },
       {
         path: '/menu',
-        element: <PrivateRoute><Menu></Menu></PrivateRoute>
+        element: <Menu></Menu>
       },
       {
         path: '/order/:category',
@@ -52,6 +53,10 @@ const Route = createBrowserRouter([
     children: [
       // User related route
       {
+        path: 'userHome',
+        element: <UserHome></UserHome>
+      },
+      {
         path: 'cart',
         element: <Cart></Cart>
       },
@@ -64,6 +69,10 @@ const Route = createBrowserRouter([
         element: <PaymentHistory></PaymentHistory>
       },
       // Admin related route
+      {
+        path: 'adminHome',
+        element: <AdminRoute><AdminHome></AdminHome></AdminRoute>
+      },
       {
         path: 'allUsers',
         element: <AdminRoute><AllUsers></AllUsers></AdminRoute>
@@ -79,12 +88,9 @@ const Route = createBrowserRouter([
       {
         path: 'updateItems/:id',
         element: <AdminRoute><UpdateItem></UpdateItem></AdminRoute>,
-        loader: ({ params }) => fetch(`http://localhost:5000/menu/${params.id}`)
+        loader: ({ params }) => fetch(`https://bistro-boss-server-six-kohl.vercel.app/menu/${params.id}`)
       },
-      {
-        path: 'adminHome',
-        element: <AdminRoute><AdminHome></AdminHome></AdminRoute>
-      }
+
     ]
   }
 ]);

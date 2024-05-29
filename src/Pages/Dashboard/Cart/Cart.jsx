@@ -46,7 +46,7 @@ const Cart = () => {
             <div className="w-3/4 mx-auto bg-base-100 p-10 rounded-lg mb-10">
                 <div className="flex justify-between items-center uppercase">
                     <h2 className=" text-2xl font-bold font-serif">Total orders: {cart.length}</h2>
-                    <h2 className=" text-2xl font-bold font-serif">Total price: $ {totalPrice}</h2>
+                    <h2 className=" text-2xl font-bold font-serif">Total price: $ {totalPrice.toFixed(2)}</h2>
                     {
                         cart.length ?
                             <Link to="/dashboard/payment"><button className="btn bg-[#D1A054] text-white">PAY</button></Link> :

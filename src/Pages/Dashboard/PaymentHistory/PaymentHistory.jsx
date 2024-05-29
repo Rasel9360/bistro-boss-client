@@ -53,7 +53,7 @@ const PaymentHistory = () => {
                                             <p>{item.transactionId}</p>
                                         </td>
                                         <td>
-                                            <p>$ {item.price}</p>
+                                            <p>$ {item.price.toFixed(2)}</p>
                                         </td>
                                         <th>
                                             {new Date(item.date).toLocaleDateString()}
