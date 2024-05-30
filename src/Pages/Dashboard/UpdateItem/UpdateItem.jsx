@@ -22,32 +22,39 @@ const UpdateItem = () => {
     const image_secret_api = `https://api.imgbb.com/1/upload?key=${image_key}`
 
     const handleAddItems = async (data) => {
-        console.log(data);
-        const imageFile = { image: data.image[0] }
+        // console.log(data.image.length);
 
-        // upload image to imageBB
+        let newImage = item?.image;
+        
+        if (data.image.length) {
+            const imageFile = { image: data?.image[0] }
 
-        const res = await axiosPublic.post(image_secret_api, imageFile, {
-            headers: {
-                'content-Type': 'multipart/form-data'
-            }
-        })
-        console.log(res.data);
-        if (res.data.success) {
-            const menuItem = {
-                name: data.name,
-                recipe: data.recipe,
-                image: res.data.data?.display_url,
-                category: data.category,
-                price: parseFloat(data.price)
-            }
-            const menu = await axiosSecure.put(`/menu/${item._id}`, menuItem)
-            console.log(menu.data);
-            if (menu.data.modifiedCount > 0) {
-                toast.success('Menu item update successfully')
-                navigate('/dashboard/manageItems')
-            }
+            // upload image to imageBB
+
+            const res = await axiosPublic.post(image_secret_api, imageFile, {
+                headers: {
+                    'content-Type': 'multipart/form-data'
+                }
+            })
+            console.log(res.data);
+            newImage = res.data.data?.display_url
         }
+
+       
+        const menuItem = {
+            name: data.name,
+            recipe: data.recipe,
+            image:  newImage,
+            category: data.category,
+            price: parseFloat(data.price)
+        }
+        const menu = await axiosSecure.put(`/menu/${item._id}`, menuItem)
+        console.log(menu.data);
+        if (menu.data.modifiedCount > 0) {
+            toast.success('Menu item update successfully')
+            navigate('/dashboard/manageItems')
+        }
+
     }
     return (
         <div>
@@ -115,7 +122,7 @@ const UpdateItem = () => {
                     <div>
                         <input
                             type="file"
-                            // {...register("image", { required: true })}
+                            {...register("image")}
                             className="file-input  w-full max-w-xs" />
                     </div>
                     <div className="flex justify-center">
